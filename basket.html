@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Basket</title>
+	<link rel="stylesheet" href="basket.css">
+	<script src="libs/jquery-3.2.1.min.js"></script>
+	<script>
+		
+		"use strict"
+		
+		$(document).ready(function(){
+
+			// jQuery methods go here...
+
+			$("[name='minus']").css("cursor","pointer");
+			$("[name='plus']").css("cursor","pointer");
+
+			// по загрузке считаются суммы товар*количество
+			$(".item").each(function(){
+				var valquant = $(this).find("input[type='text']").val();
+				var valprice = parseInt( $(this).find(".sumOne").text() );
+				$(this).find("[name='sum']").text(valquant*valprice);				
+			});
+
+			function total(){
+					var values = $(".price span[name='sum']");					
+					var total = 0;
+					for(var i = 0; i < values.length; i++){
+				   		 total += parseInt( values[i].innerHTML ); 
+				    }
+					$("#total").text(total);
+				};
+			total(); // считается ИТОГО
+
+			// плюс и минус 
+			
+			$(".quantity [name='minus']").click(function(){
+				var valOld = parseInt( $(this).next().val() );
+				var sumOne = parseInt( $(this).parents(".priceQuantity").prev().find(".sumOne").text() );				
+			if(valOld > 0){
+				$(this).next().val(valOld-1);							
+				$(this).parents(".quantity").next().find("span[name='sum']").text((valOld-1)*sumOne);				
+				total();
+			}
+				
+			});
+
+			$(".quantity [name='plus']").click(function(){
+				var valOld = parseInt( $(this).prev().val() );
+				var sumOne = parseInt( $(this).parents(".priceQuantity").prev().find(".sumOne").text() );				
+
+				$(this).prev().val(valOld+1);
+				$(this).parents(".quantity").next().find("span[name='sum']").text((valOld+1)*sumOne);				
+				total();
+			});
+
+
+		}); 
+
+	</script>
+</head>
+<body>
+	<div id="wrap">
+		<div id="basket">
+			<h1>Корзина</h1>
+			<div class="item">
+				<div class="itemImage">
+					<img src="img/item01.jpg" alt="image">
+				</div>
+				<div class="itemInfo">
+					<a href="https://rozetka.com.ua/piko_1283126472527/p12457972/" target="_blank">Переходник сетевой Piko TA-003 на EU (1283126472527)</a>
+					<span class="sumOne">169 </span><span>грн</span><br><br>
+					<span>Продавец</span><br>
+					<img src="img/rozetka.jpg" alt="logo">
+				</div>
+				<div class="priceQuantity">
+					<div class="quantity">
+						<span name="minus">-</span>
+						<input type="text" value="1">
+						<span name="plus">+</span>
+					</div>
+					<div class="price">
+						<span>Сумма:</span><br>
+						<span name="sum">169</span><span>грн</span>
+					</div>
+				</div>
+			</div>
+		
+			<div class="item">
+				<div class="itemImage">
+					<img src="img/item02.jpg" alt="image">
+				</div>
+				<div class="itemInfo">
+					<a href="https://rozetka.com.ua/piko_1283126472534/p12458112/" target="_blank">Переходник сетевой Piko TA-004 на EU (1283126472534)</a>
+					<span class="sumOne">119 </span><span>грн</span><br><br>
+					<span>Продавец</span><br>
+					<img src="img/rozetka.jpg" alt="logo">
+				</div>
+				<div class="priceQuantity">
+					<div class="quantity">
+						<span name="minus">-</span>
+						<input type="text" value="1">
+						<span name="plus">+</span>
+					</div>
+					<div class="price">
+						<span>Сумма:</span><br>
+						<span name="sum">119</span><span>грн</span>
+					</div>
+				</div>
+			</div>
+		
+			<div class="item">
+				<div class="itemImage">
+					<img src="img/item03.jpg" alt="image">
+				</div>
+				<div class="itemInfo">
+					<a href="https://rozetka.com.ua/piko_1283126472503/p12457118/" target="_blank">Переходник сетевой Piko TA-001 на EU (1283126472503)</a>
+					<span class="sumOne">49 </span><span>грн</span><br><br>
+					<span>Продавец</span><br>
+					<img src="img/rozetka.jpg" alt="logo">
+				</div>
+				<div class="priceQuantity">
+					<div class="quantity">
+						<span name="minus">-</span>
+						<input type="text" value="1">
+						<span name="plus">+</span>
+					</div>
+					<div class="price">
+						<span>Сумма:</span><br>
+						<span name="sum">49</span><span>грн</span>
+					</div>
+				</div>
+			</div>
+			<div id="totalSum">
+				<span>ИТОГО:</span><span id="total"></span><span>грн</span>
+			</div>
+		
+		</div>
+	</div>
+	
+</body>
+</html>
